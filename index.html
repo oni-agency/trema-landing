@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trëma — L'aménagement en toute tranquillité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET & TOKENS ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:        #FAF7F2;
+      --beige:        #F0EAE0;
+      --beige-dark:   #E6DDD0;
+      --sand:         #D4C8BA;
+      --brown-dark:   #2C2825;
+      --brown-mid:    #6B5E54;
+      --brown-light:  #9A8A7F;
+      --accent:       #B8956A;
+      --accent-light: #D4B896;
+      --accent-dark:  #9A7550;
+      --sage:         #8A9B7A;
+      --sage-light:   #B5C6A5;
+      --white:        #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--cream);
+      color: var(--brown-dark);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1.15;
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { text-decoration: none; }
+
+    /* ─── BOUTON ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.85rem 1.75rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      border: none;
+      transition: all .25s ease;
+      white-space: nowrap;
+    }
+    .btn-filled {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .btn-filled:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(184,149,106,.28);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--brown-dark);
+      border: 1px solid var(--sand);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ─── EYEBROW ─── */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+    .eyebrow-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .eyebrow span {
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ─── TITRES SECTION ─── */
+    .section-title {
+      font-size: clamp(2rem, 3vw, 3.1rem);
+      font-weight: 400;
+      color: var(--brown-dark);
+      margin-bottom: 0.9rem;
+    }
+    .section-title em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+    .section-sub {
+      font-size: 0.94rem;
+      color: var(--brown-mid);
+      line-height: 1.85;
+      max-width: 54ch;
+    }
+
+    .section-header { margin-bottom: 4rem; }
+
+
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    .navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      padding: 1rem 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,247,242,.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212,200,186,.45);
+      transition: box-shadow .3s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 24px rgba(44,40,37,.08); }
+
+    .navbar-logo img {
+      height: 2rem;
+      width: auto;
+      mix-blend-mode: multiply;
+    }
+
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .navbar-links a {
+      color: var(--brown-mid);
+      font-size: 0.77rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .navbar-links a:hover { color: var(--brown-dark); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--brown-dark);
+    }
+
+
+    /* ════════════════════════════════
+       HERO — texte centré, sans image dans la colonne
+    ════════════════════════════════ */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 6rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Taches organiques décoratives */
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before {
+      width: 36rem;
+      height: 36rem;
+      top: -8rem;
+      right: -10rem;
+      background: radial-gradient(circle, rgba(184,149,106,.09) 0%, transparent 65%);
+    }
+    .hero::after {
+      width: 28rem;
+      height: 28rem;
+      bottom: -6rem;
+      left: -8rem;
+      background: radial-gradient(circle, rgba(138,155,122,.08) 0%, transparent 65%);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.75rem;
+    }
+    .hero-tag::before,
+    .hero-tag::after {
+      content: '';
+      width: 1.75rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(3.2rem, 6vw, 6rem);
+      font-weight: 300;
+      color: var(--brown-dark);
+      margin-bottom: 1.5rem;
+      max-width: 16ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--brown-mid);
+      line-height: 1.9;
+      max-width: 52ch;
+      margin: 0 auto 2.75rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+
+    /* ════════════════════════════════
+       BANNIÈRE PLEINE LARGEUR
+    ════════════════════════════════ */
+    .banner-section {
+      padding: 0 6rem 6rem;
+    }
+    .banner-frame {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 16px 56px rgba(44,40,37,.12);
+    }
+    .banner-frame img {
+      width: 100%;
+      display: block;
+    }
+
+
+    /* ════════════════════════════════
+       VALEURS
+    ════════════════════════════════ */
+    .values-section {
+      padding: 5rem 6rem;
+      background: var(--white);
+      border-top: 1px solid var(--beige-dark);
+      border-bottom: 1px solid var(--beige-dark);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .value-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+
+    .value-icon {
+      width: 4.25rem;
+      height: 4.25rem;
+      border-radius: 50%;
+      background: var(--beige);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .25s;
+    }
+    .value-card:hover .value-icon { background: var(--beige-dark); }
+    .value-icon svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke: var(--accent-dark);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .value-label {
+      font-size: 0.83rem;
+      color: var(--brown-mid);
+      line-height: 1.55;
+      max-width: 14ch;
+    }
+
+
+    /* ════════════════════════════════
+       CONCEPT
+    ════════════════════════════════ */
+    .concept-section {
+      padding: 7rem 6rem;
+      background: var(--cream);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+    }
+    .steps-line {
+      position: absolute;
+      top: 2.75rem;
+      left: calc(16.666% + 2.5rem);
+      right: calc(16.666% + 2.5rem);
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-light), var(--sage-light), var(--accent-light));
+      pointer-events: none;
+    }
+
+    .step {
+      padding: 0 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step:first-child { padding-left: 0; }
+    .step:last-child  { padding-right: 0; }
+
+    .step-ring {
+      width: 5.5rem;
+      height: 5.5rem;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .step h3 {
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--brown-dark);
+      margin-bottom: 0.7rem;
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--brown-mid);
+      line-height: 1.85;
+    }
+
+
+    /* ════════════════════════════════
+       BOX SHOWCASE
+    ════════════════════════════════ */
+    .box-section {
+      padding: 7rem 6rem;
+      background: var(--beige);
+    }
+
+    .box-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .box-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(184,149,106,.13);
+      border: 1px solid rgba(184,149,106,.3);
+      padding: 0.38rem 1rem;
+      border-radius: 50px;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .box-title {
+      font-size: clamp(2.2rem, 3vw, 3.5rem);
+      font-weight: 400;
+      color: var(--brown-dark);
+      margin-bottom: 0.75rem;
+    }
+    .box-desc {
+      font-size: 0.93rem;
+      color: var(--brown-mid);
+      line-height: 1.9;
+      margin-bottom: 2.25rem;
+    }
+
+    .items-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 1rem;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: var(--brown-dark);
+      transition: border-color .2s, transform .2s;
+      cursor: default;
+    }
+    .item:hover { border-color: var(--accent-light); transform: translateX(3px); }
+    .item svg {
+      width: 0.85rem;
+      height: 0.85rem;
+      stroke: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Photo dans un cadre portrait — cadrage sur le côté produit */
+    .box-photo-wrap {
+      position: sticky;
+      top: 6rem;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 12px 48px rgba(44,40,37,.12);
+    }
+    .box-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* On coupe volontairement sur la moitié droite de la bannière (produits) */
+      object-position: right center;
+    }
+
+    /* Bientôt */
+    .soon-section { margin-top: 5rem; }
+    .soon-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 1.25rem;
+    }
+    .soon-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .soon-card {
+      background: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: 5px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .soon-card:hover {
+      border-color: var(--accent-light);
+      box-shadow: 0 4px 18px rgba(184,149,106,.1);
+    }
+    .soon-card svg {
+      width: 2.4rem;
+      height: 2.4rem;
+      stroke: var(--accent);
+      stroke-width: 1.4;
+      fill: none;
+      margin: 0 auto 0.85rem;
+    }
+    .soon-card h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--brown-dark);
+      margin-bottom: 0.5rem;
+    }
+    .soon-pill {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6B7C5E;
+      background: rgba(138,155,122,.12);
+      padding: 0.22rem 0.65rem;
+      border-radius: 50px;
+    }
+
+
+    /* ════════════════════════════════
+       POURQUOI TRËMA (fond sombre)
+    ════════════════════════════════ */
+    .why-section {
+      padding: 7rem 6rem;
+      background: var(--brown-dark);
+    }
+    .why-section .eyebrow-line { background: var(--accent-light); }
+    .why-section .eyebrow span { color: var(--accent-light); }
+    .why-section .section-title { color: var(--white); }
+    .why-section .section-sub   { color: rgba(255,255,255,.5); }
+
+    .why-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .why-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 6px;
+      padding: 2rem;
+      transition: background .25s, border-color .25s;
+    }
+    .why-card:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(184,149,106,.3);
+    }
+    .why-icon {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 50%;
+      background: rgba(184,149,106,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .why-icon svg {
+      width: 1.2rem;
+      height: 1.2rem;
+      stroke: var(--accent-light);
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .why-card h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+    }
+    .why-card p {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.85;
+    }
+
+
+    /* ════════════════════════════════
+       CONTACT (simple, informatif)
+    ════════════════════════════════ */
+    .contact-section {
+      padding: 6rem 6rem;
+      background: var(--beige);
+      text-align: center;
+    }
+    .contact-section .eyebrow { justify-content: center; }
+    .contact-section .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      max-width: 20ch;
+      margin: 0 auto 1rem;
+    }
+    .contact-section .section-sub {
+      max-width: 50ch;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+    .contact-mail {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      transition: color .2s;
+    }
+    .contact-mail:hover { color: var(--accent-dark); }
+
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer {
+      background: var(--brown-dark);
+      padding: 4rem 6rem 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .footer-logo {
+      height: 1.9rem;
+      filter: invert(1);
+      mix-blend-mode: screen;
+      opacity: .85;
+      margin-bottom: 1.1rem;
+    }
+    .footer-desc {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,.38);
+      line-height: 1.85;
+      max-width: 26ch;
+    }
+
+    .footer-col-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 1.3rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-links a {
+      font-size: 0.81rem;
+      color: rgba(255,255,255,.35);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--accent-light); }
+
+    .footer-bottom {
+      padding: 1.6rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy { font-size: 0.75rem; color: rgba(255,255,255,.2); }
+
+    .footer-socials { display: flex; gap: 0.8rem; }
+    .social-btn {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.35);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .social-btn:hover { border-color: var(--accent-light); color: var(--accent-light); }
+    .social-btn svg { width: 0.88rem; height: 0.88rem; stroke: currentColor; fill: none; stroke-width: 1.75; }
+
+
+    /* ════════════════════════════════
+       MENU MOBILE
+    ════════════════════════════════ */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 98;
+      background: var(--cream);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      transform: translateY(-1rem);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--brown-dark);
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2rem;
+      transition: color .2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu-footer {
+      position: absolute;
+      bottom: 2.5rem;
+      font-size: 0.72rem;
+      color: var(--brown-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Hamburger → croix animée */
+    .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .hamburger span { transition: transform .25s, opacity .25s; }
+
+
+    /* ════════════════════════════════
+       REVEAL AU SCROLL
+    ════════════════════════════════ */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(1.5rem);
+        transition: opacity .7s ease, transform .7s ease;
+      }
+      .reveal.in-view { opacity: 1; transform: translateY(0); }
+      .d1 { transition-delay: .1s; }
+      .d2 { transition-delay: .2s; }
+      .d3 { transition-delay: .3s; }
+    }
+
+
+    /* ════════════════════════════════
+       TABLETTE (≤ 1100px)
+    ════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .navbar          { padding: 1rem 3rem; }
+      .hero            { padding: 9rem 3rem 5rem; }
+      .banner-section  { padding: 0 3rem 5rem; }
+      .values-section  { padding: 4.5rem 3rem; }
+      .concept-section { padding: 6rem 3rem; }
+      .box-section     { padding: 6rem 3rem; }
+      .why-section     { padding: 6rem 3rem; }
+      .contact-section { padding: 5rem 3rem; }
+      footer           { padding: 4rem 3rem 0; }
+    }
+
+    /* ════════════════════════════════
+       TABLETTE PORTRAIT (≤ 860px)
+    ════════════════════════════════ */
+    @media (max-width: 860px) {
+      .navbar          { padding: 1rem 2rem; }
+      .hero            { padding: 8rem 2rem 4rem; min-height: auto; }
+      .banner-section  { padding: 0 2rem 4.5rem; }
+      .values-section  { padding: 4rem 2rem; }
+      .concept-section { padding: 5rem 2rem; }
+      .box-section     { padding: 5rem 2rem; }
+      .why-section     { padding: 5rem 2rem; }
+      .contact-section { padding: 4.5rem 2rem; }
+      footer           { padding: 3.5rem 2rem 0; }
+
+      .values-grid    { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+      .steps-grid     { grid-template-columns: 1fr; gap: 2.5rem; }
+      .steps-line     { display: none; }
+      .step           { padding: 0; }
+      .box-layout     { grid-template-columns: 1fr; gap: 2.5rem; }
+      .box-photo-wrap { position: static; aspect-ratio: 16/8; }
+      .why-cards      { grid-template-columns: 1fr 1fr; }
+      .footer-grid    { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+
+    /* ════════════════════════════════
+       MOBILE (≤ 600px)
+    ════════════════════════════════ */
+    @media (max-width: 600px) {
+      /* Nav */
+      .navbar        { padding: 0 1.25rem; height: 60px; }
+      .navbar-links  { display: none; }
+      .hamburger     { display: flex; }
+
+      /* Hero */
+      .hero {
+        padding: 5.5rem 1.25rem 3rem;
+        min-height: auto;
+        text-align: center;
+      }
+      .hero h1 {
+        font-size: clamp(2.6rem, 11vw, 3.5rem);
+        margin-bottom: 1.25rem;
+      }
+      .hero-tag { font-size: 0.62rem; }
+      .hero-desc {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+      }
+      /* Boutons pleine largeur et empilés */
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 52px;
+        font-size: 0.8rem;
+      }
+
+      /* Bannière */
+      .banner-section { padding: 0 1.25rem 3.5rem; }
+      .banner-frame   { border-radius: 8px; }
+
+      /* Valeurs */
+      .values-section { padding: 3rem 1.25rem; }
+      .values-grid    { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+      .value-icon     { width: 3.5rem; height: 3.5rem; }
+      .value-label    { font-size: 0.78rem; max-width: 12ch; }
+
+      /* Concept */
+      .concept-section { padding: 4rem 1.25rem; }
+      .section-header  { margin-bottom: 2.75rem; }
+      .section-title   { font-size: clamp(1.85rem, 8vw, 2.4rem); }
+      .section-sub     { font-size: 0.9rem; }
+      .step-ring       { width: 4.5rem; height: 4.5rem; margin-bottom: 1.25rem; }
+      .step-num        { font-size: 1.5rem; }
+      .step h3         { font-size: 1.2rem; }
+
+      /* Box */
+      .box-section    { padding: 4rem 1.25rem; }
+      .items-grid     { grid-template-columns: 1fr; gap: 0.5rem; }
+      .item           { min-height: 44px; }
+      .box-photo-wrap { aspect-ratio: 4/3; border-radius: 6px; }
+
+      /* Soon */
+      .soon-section   { margin-top: 3rem; }
+      .soon-grid      { grid-template-columns: 1fr; gap: 0.75rem; }
+      .soon-card      { padding: 1.25rem; }
+
+      /* Pourquoi */
+      .why-section    { padding: 4rem 1.25rem; }
+      .why-cards      { grid-template-columns: 1fr; gap: 1rem; }
+      .why-card       { padding: 1.5rem; }
+
+      /* Contact */
+      .contact-section { padding: 4rem 1.25rem; }
+      .contact-mail    { font-size: 1.2rem; word-break: break-all; }
+
+      /* Footer */
+      footer           { padding: 3rem 1.25rem 0; }
+      .footer-grid     { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 2.5rem; }
+      .footer-bottom   { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem 0; }
+    }
+
+    /* ════════════════════════════════
+       PETIT MOBILE (≤ 390px)
+    ════════════════════════════════ */
+    @media (max-width: 390px) {
+      .hero h1 { font-size: 2.4rem; }
+      .values-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .value-label { font-size: 0.74rem; max-width: 10ch; }
+      .item { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════ MENU MOBILE OVERLAY ══════════ -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation">
+    <a href="#concept"  onclick="closeMenu()">Le concept</a>
+    <a href="#nos-box"  onclick="closeMenu()">Nos box</a>
+    <a href="#pourquoi" onclick="closeMenu()">À propos</a>
+    <a href="#contact"  onclick="closeMenu()">Contact</a>
+    <p class="mobile-menu-footer">trëma © 2025</p>
+  </div>
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="#" aria-label="Trëma — Accueil">
+      <img src="./trema.jpeg" alt="Trëma" style="height:2rem; mix-blend-mode:multiply;">
+    </a>
+    <ul class="navbar-links">
+      <li><a href="#concept">Le concept</a></li>
+      <li><a href="#nos-box">Nos box</a></li>
+      <li><a href="#pourquoi">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero" id="home">
+    <div class="hero-tag">Box d'emménagement</div>
+
+    <h1>
+      L'aménagement<br>
+      en toute <em>tranquillité</em>
+    </h1>
+
+    <p class="hero-desc">
+      Trëma conçoit des box d'emménagement regroupant les essentiels du quotidien. Chaque box est pensée pour faciliter les premières étapes de l'installation — pratique, harmonieux, rapide et accessible.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#nos-box" class="btn btn-filled">
+        Voir nos box
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#concept" class="btn btn-outline">Notre concept</a>
+    </div>
+  </section>
+
+
+  <!-- ══════════ BANNIÈRE PLEINE LARGEUR ══════════ -->
+  <div class="banner-section">
+    <div class="banner-frame">
+      <img src="./banniere.jpeg" alt="Trëma — L'aménagement en toute tranquillité, des box pensées pour un nouveau départ simple et serein">
+    </div>
+  </div>
+
+
+  <!-- ══════════ VALEURS ══════════ -->
+  <section class="values-section">
+    <div class="values-grid">
+
+      <div class="value-card reveal">
+        <div class="value-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        </div>
+        <p class="value-label">Des essentiels regroupés</p>
+      </div>
+
+      <div class="value-card reveal d1">
+        <div class="value-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+            <polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <p class="value-label">Emménagement sans stress</p>
+      </div>
+
+      <div class="value-card reveal d2">
+        <div class="value-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <p class="value-label">Sélectionnés avec soin et qualité</p>
+      </div>
+
+      <div class="value-card reveal d3">
+        <div class="value-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 007.92 12.446A9 9 0 1112 3z"/></svg>
+        </div>
+        <p class="value-label">Une approche responsable</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════ CONCEPT ══════════ -->
+  <section class="concept-section" id="concept">
+    <div class="section-header reveal">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Notre concept</span></div>
+      <h2 class="section-title">Emménager, <em>simplement.</em></h2>
+      <p class="section-sub">Finies les courses d'urgence dans plusieurs enseignes. Trëma rassemble l'essentiel pour votre nouveau chez-vous, livré directement à votre adresse.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="steps-line" aria-hidden="true"></div>
+
+      <div class="step reveal">
+        <div class="step-ring"><span class="step-num">01</span></div>
+        <h3>Choisissez votre box</h3>
+        <p>Cuisine, salle de bain, chambre ou salon — sélectionnez la box adaptée ou optez pour un pack complet maison.</p>
+      </div>
+
+      <div class="step reveal d1">
+        <div class="step-ring"><span class="step-num">02</span></div>
+        <h3>Recevez l'essentiel</h3>
+        <p>Chaque produit est soigneusement sélectionné pour sa qualité et son utilité. Une seule livraison, tout y est.</p>
+      </div>
+
+      <div class="step reveal d2">
+        <div class="step-ring"><span class="step-num">03</span></div>
+        <h3>Installez-vous sereinement</h3>
+        <p>Tout est prêt à l'emploi. Profitez pleinement de vos premiers jours dans votre nouveau logement.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════ BOX SHOWCASE ══════════ -->
+  <section class="box-section" id="nos-box">
+    <div class="section-header reveal">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Nos box</span></div>
+      <h2 class="section-title">Une box pour chaque pièce</h2>
+      <p class="section-sub">Chaque box réunit les indispensables dont vous avez besoin dès le premier jour, pièce par pièce.</p>
+    </div>
+
+    <div class="box-layout">
+
+      <!-- Infos -->
+      <div class="reveal">
+        <span class="box-badge">Disponible au lancement</span>
+        <h2 class="box-title" style="font-family:'Cormorant Garamond',serif; font-weight:400;">
+          Box <em style="font-style:italic; color:var(--accent);">Cuisine</em>
+        </h2>
+        <p class="box-desc">
+          Tout ce qu'il vous faut pour cuisiner dès le premier soir. De la poêle au tire-bouchon, chaque détail a été pensé pour que votre cuisine soit opérationnelle en quelques minutes.
+        </p>
+
+        <p class="items-label">Contenu de la box — 14 indispensables</p>
+
+        <div class="items-grid">
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 poêle + 1 casserole</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 couteau de cuisine</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Planche à découper</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>4 assiettes, 4 bols, 4 verres</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Couverts pour 4 personnes</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Éponge + liquide vaisselle</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 torchon</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 boîte hermétique</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sel, poivre, huile de cuisson</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 tire-bouchon / ouvre-boîte</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 paire de ciseaux</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Essuie-tout</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 spatule</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 grande cuillère</div>
+        </div>
+      </div>
+
+      <!-- Photo (cadrage droit = produits uniquement) -->
+      <div class="box-photo-wrap reveal d1">
+        <img src="./banniere.jpeg" alt="Box Cuisine Trëma — boîtes empilées avec vaisselle et ustensiles">
+      </div>
+    </div>
+
+    <!-- Bientôt disponibles -->
+    <div class="soon-section reveal">
+      <p class="soon-label">Prochainement disponibles</p>
+      <div class="soon-grid">
+
+        <div class="soon-card">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 10h12M6 14h12M4 6h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 6V4m8 2V4"/>
+          </svg>
+          <h3>Salle de bain</h3>
+          <span class="soon-pill">Bientôt</span>
+        </div>
+
+        <div class="soon-card">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M3 9a2 2 0 012-2h14a2 2 0 012 2M3 9v8a2 2 0 002 2h14a2 2 0 002-2V9M8 21v-4a2 2 0 012-2h4a2 2 0 012 2v4"/>
+          </svg>
+          <h3>Chambre</h3>
+          <span class="soon-pill">Bientôt</span>
+        </div>
+
+        <div class="soon-card">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          <h3>Salon</h3>
+          <span class="soon-pill">Bientôt</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════ POURQUOI TRËMA ══════════ -->
+  <section class="why-section" id="pourquoi">
+    <div class="section-header reveal">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Pourquoi Trëma</span></div>
+      <h2 class="section-title" style="color:var(--white);">Pensé pour vous,<br><em>dès le premier jour.</em></h2>
+      <p class="section-sub">L'emménagement est un moment fort. Trëma s'assure qu'il soit aussi simple qu'agréable.</p>
+    </div>
+
+    <div class="why-cards">
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3>Qualité sélectionnée</h3>
+        <p>Chaque produit est choisi pour sa durabilité et son usage quotidien. Pas de superflu — que de l'essentiel bien pensé.</p>
+      </div>
+
+      <div class="why-card reveal d1">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3>Gain de temps immédiat</h3>
+        <p>Fini les allers-retours en magasin. Tout arrive en une seule livraison, prêt à l'emploi dès réception.</p>
+      </div>
+
+      <div class="why-card reveal d2">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75"/></svg>
+        </div>
+        <h3>Budget maîtrisé</h3>
+        <p>Prix transparent, sans mauvaise surprise. Un tarif fixe qui couvre tout l'essentiel pour bien démarrer.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════ CONTACT ══════════ -->
+  <section class="contact-section" id="contact">
+    <div class="eyebrow" style="justify-content:center; margin-bottom:1.1rem;">
+      <div class="eyebrow-line"></div>
+      <span>Nous contacter</span>
+      <div class="eyebrow-line"></div>
+    </div>
+    <h2 class="section-title reveal">Une question ? Une idée ?</h2>
+    <p class="section-sub reveal">Trëma est en cours de lancement. N'hésitez pas à nous écrire pour en savoir plus, proposer une idée ou simplement suivre l'aventure.</p>
+    <a class="contact-mail reveal" href="mailto:contact@trema.fr">contact@trema.fr</a>
+  </section>
+
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <img class="footer-logo" src="./trema.jpeg" alt="Trëma">
+        <p class="footer-desc">Des box d'emménagement pensées pour simplifier votre installation. L'essentiel, livré directement chez vous.</p>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#concept">Le concept</a></li>
+          <li><a href="#nos-box">Nos box</a></li>
+          <li><a href="#pourquoi">À propos</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Légal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Trëma. Tous droits réservés.</p>
+      <div class="footer-socials">
+        <a class="social-btn" href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="social-btn" href="#" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // ── Scroll reveal ──────────────────────────
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ── Navbar shadow on scroll ─────────────────
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
+
+    // ── Menu mobile ────────────────────────────
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobileMenu');
+    let menuOpen = false;
+
+    function openMenu() {
+      menuOpen = true;
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('active');
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Fermer le menu');
+      document.body.style.overflow = 'hidden';  // bloque le scroll
+    }
+
+    function closeMenu() {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Ouvrir le menu');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+
+    // Fermer en appuyant sur Échap
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+  </script>
+</body>
+</html>
